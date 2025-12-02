@@ -2,16 +2,10 @@ import { GoogleGenAI } from "@google/genai";
 import { TEAM_MEMBERS, GROUP_CAPABILITIES, GROUP_VISION } from "../constants";
 
 // Initialize Gemini Client
-// IMPORTANT: In a real production app, this should be proxied through a backend.
-// For this demo, we assume the key is in the env.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+// The API key must be obtained exclusively from the environment variable process.env.API_KEY.
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const generateTeamPitch = async (projectName: string): Promise<string> => {
-  if (!process.env.API_KEY) {
-    console.warn("API Key is missing.");
-    return "אנא הגדר מפתח API כדי לקבל פיץ' מותאם אישית מ-Gemini.";
-  }
-
   const teamContext = TEAM_MEMBERS.map(m => `${m.name}: ${m.role} (${m.description})`).join('\n');
   const capabilitiesContext = GROUP_CAPABILITIES.join(', ');
   
